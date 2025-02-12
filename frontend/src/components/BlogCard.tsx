@@ -39,13 +39,13 @@ export const BlogCard = ({
      </div>
      
      <div className="text-left ">
-        <div className="flex justify-start text-xl font-bold self-stretch">
+        <div className="flex justify-start text-xl font-bold ">
           {title}
         </div>
-        <div className="flex justify-start pr-4 text-md font-thin self-stretch">
+        <div className="flex justify-start pr-4 text-md font-thin ">
           {content.slice(0, 100) + "..."}
         </div>
-        <div className="flex justify-start font-thin text-sm text-slate-400 pb-2 self-stretch">
+        <div className="flex justify-start font-thin text-sm text-slate-400 pb-2 ">
           {`${Math.ceil(content.length / 100)} minute(s) read`}
         </div>
       </div>

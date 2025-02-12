@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { Avatar } from "./BlogCard"
 import { useState } from "react"
 
-export const Appbar = ({name}:{name:any}) => {
+export const Appbar = ({name}:{name:string}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   
@@ -16,14 +16,14 @@ export const Appbar = ({name}:{name:any}) => {
       <div className="flex justify-between items-center">
         <Link to={'/blogs'}>
           <div className="font-semibold font-mono text-2xl sm:text-4xl">
-            Verse
+            Yokai
           </div>
         </Link>
         <div className="hidden sm:flex items-center space-x-4">
           <Link to={'/publish'}>
             <Button />
           </Link>
-          <Avatar name={(name!=null) ? name : "Anonymous"} size="big" />
+          <Avatar name={(name) ? name : "Anonymous"} size="big" />
           <button
             onClick={handleLogout}
             className="text-gray-600 hover:text-gray-800"

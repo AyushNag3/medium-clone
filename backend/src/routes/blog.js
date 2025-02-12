@@ -5,56 +5,57 @@ import { PrismaClient } from '@prisma/client/edge';
 import { withAccelerate } from '@prisma/extension-accelerate';
 import { createblogInput, updateblog } from '../../../common/src/index';
 export const blogRouter = new Hono();
-blogRouter.use('*/', async (c, next) => {
+blogRouter.use('/*', async (c, next) => {
     const jwt = c.req.header('Authorization');
     if (!jwt) {
         c.status(401);
         return c.json({ error: "unauthorized" });
     }
     const token = jwt.split(' ')[1];
-    try {
-        const payload = await verify(token, c.env.JWT_SECRET);
-        if (payload) { //@ts-ignore
-            c.set('userId', payload.id); // payload.id is the value that gets stored in the key.
-            await next(); // The key-value pair ('userId': payload.id) is stored only for the duration of the request and can be accessed later within the same request cycle.
-        }
-        else {
-            c.status(401);
-            return c.json({ error: "unauthorized" });
-        }
+    const payload = await verify(token, c.env.JWT_SECRET);
+    if (!payload) {
+        c.status(401);
+        return c.json({ error: "unauthorized" });
     }
-    catch (e) {
-        c.status(403);
-        return c.json({ error: "You are not logged in" });
-    }
+    //@ts-ignore
+    c.set('userId', payload.id);
+    await next();
 });
 blogRouter.post('/', async (c) => {
-    const userId = c.get('userId');
-    const prisma = new PrismaClient({
-        datasourceUrl: c.env?.DATABASE_URL,
-    }).$extends(withAccelerate());
-    const body = await c.req.json();
-    const { success } = createblogInput.safeParse(body);
-    if (!success) {
-        c.status(411);
-        return c.json({
-            message: "Inputs not correct"
-        });
-    }
-    const post = await prisma.post.create({
-        data: {
-            title: body.title,
-            content: body.content, //@ts-ignore
-            authorId: 1
+    try {
+        // Optionally retrieve the userId from the request context (ensure an authentication middleware sets this)
+        // Initialize Prisma with your database URL from environment variables
+        const prisma = new PrismaClient({
+            datasourceUrl: c.env?.DATABASE_URL,
+        }).$extends(withAccelerate());
+        const userId = c.get('userId');
+        // Parse and validate the request body
+        const body = await c.req.json();
+        const parsed = createblogInput.safeParse(body);
+        if (!parsed.success) {
+            c.status(400);
+            return c.json({
+                message: "Inputs not correct",
+                errors: parsed.error.errors,
+            });
         }
-    });
-    return c.json({
-        id: post.id
-    });
+        // Create the post in the database using validated data and the actual userId
+        const post = await prisma.post.create({
+            data: {
+                title: parsed.data.title,
+                content: parsed.data.content,
+                authorId: Number(userId) // Use the authenticated user's id
+            },
+        });
+        return c.json({ id: post.id });
+    }
+    catch (error) {
+        console.error("Error publishing blog:", error);
+        return c.json({ message: "Internal Server Error" }, 500);
+    }
 });
 blogRouter.get('/bulk', async (c) => {
     //@ts-ignore
-    const userId = c.get('userId');
     const prisma = new PrismaClient({
         datasources: {
             db: {
@@ -100,7 +101,7 @@ blogRouter.put('/', async (c) => {
         },
         data: {
             title: body.title,
-            content: body.content
+            content: body.content,
         }
     });
     return c.json({
@@ -109,7 +110,6 @@ blogRouter.put('/', async (c) => {
 });
 blogRouter.get('/:id', async (c) => {
     const id = c.req.param('id'); //@ts-ignore
-    const userId = c.get('userId');
     const prisma = new PrismaClient({
         datasourceUrl: c.env?.DATABASE_URL,
     }).$extends(withAccelerate());

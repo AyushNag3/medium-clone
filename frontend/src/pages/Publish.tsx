@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 
  // alternative : const Blogdata = {title, content}
-                                                           // write Blogdata, instead of {title,content}, 
+  // write Blogdata, instead of {title,content}, 
                
       
  
@@ -31,7 +31,7 @@ export const Publish = () => {
       try {
         const response = await axios.post(`${BACKEND_URL}/api/v2/blog`,blogData,{
           headers:{
-            Authorization :localStorage.getItem("token")
+            Authorization : "Bearer " +  localStorage.getItem("token")
           }
         });
   
