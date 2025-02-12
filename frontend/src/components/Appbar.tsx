@@ -8,7 +8,7 @@ export const Appbar = ({name}:{name:string}) => {
   
   const handleLogout = () => {
     localStorage.clear();
-    navigate('/signup');
+    navigate('/signin');
   }
 
   return (
