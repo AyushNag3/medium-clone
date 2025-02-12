@@ -36,7 +36,7 @@ export const Auth = ({type} : {type : "Signin" | "Signup"}) => {
                     <div className="text-slate-400">
                         {type === "Signin" ? "Don't have an account ?" : "Already have an account ?"}
                         
-                        {type === "Signin" ? <Link className="pl-2 underline" to = {"/signup"}>
+                        {type === "Signin" ? <Link className="pl-2 underline" to = {"/"}>
                         "Sign Up" 
                         </Link> :
                          <Link className="pl-2 underline" to = {"/signin"}>
