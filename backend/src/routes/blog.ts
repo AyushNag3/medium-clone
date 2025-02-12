@@ -54,8 +54,8 @@ blogRouter.post('/', async (c) => {
 	  // Create the post in the database using validated data and the actual userId
 	  const post = await prisma.post.create({
 		data: {
-		  title: parsed.data.title,
-		  content: parsed.data.content,
+		  title: body.title,
+		  content: body.content,
 		  authorId: Number(userId) // Use the authenticated user's id
 		},
 	  });
