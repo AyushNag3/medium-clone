@@ -13,5 +13,8 @@
     "zod": "^3.24.1"
   },
   "types": "./dist/index.d.ts",
-  "description": ""
+  "description": "",
+  "exports" : {
+    "./client" : "./index.ts"
+  }
 }
