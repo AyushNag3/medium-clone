@@ -5,10 +5,10 @@ import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { auth } from 'hono/utils/basic-auth'
 import { signupInput, signinInput, createblogInput, updateblog} from '../../../common/src/index'
-import { updatePostInput } from '@shivanandh33/medium-clone'
+
 export const blogRouter = new Hono<{
     Bindings : {
-      DATABASE_URL : string,
+      DATABASE : string,
       JWT_SECRET: string,
     }
   }>()
@@ -37,8 +37,8 @@ blogRouter.post('/', async (c) => {
 
 	  // Initialize Prisma with your database URL from environment variables
 	  const prisma = new PrismaClient({
-		datasourceUrl: c.env?.DATABASE_URL,
-	  }).$extends(withAccelerate());
+		datasourceUrl: c.env?.DATABASE,
+	  }).$extends(withAccelerate());  //@ts-ignore
        const userId = c.get('userId') ;
 	  // Parse and validate the request body
 	  const body = await c.req.json();
@@ -74,7 +74,7 @@ blogRouter.get('/bulk', async (c) => {
 	const prisma = new PrismaClient({
 	  datasources: {
 		db: {
-		  url: c.env?.DATABASE_URL,
+		  url: c.env?.DATABASE,
 		},
 	  },
 	}).$extends(withAccelerate());
@@ -101,7 +101,7 @@ blogRouter.get('/bulk', async (c) => {
 blogRouter.put('/', async (c) => { //@ts-ignore
 	const userId = c.get('userId');
 	const prisma = new PrismaClient({
-		datasourceUrl: c.env?.DATABASE_URL	,
+		datasourceUrl: c.env?.DATABASE	,
 	}).$extends(withAccelerate());
 	const body = await c.req.json();
 	const {success} = updateblog.safeParse(body) ;
@@ -132,7 +132,7 @@ blogRouter.get('/:id', async (c) => {
 	const id = c.req.param('id'); //@ts-ignore
 
 	const prisma = new PrismaClient({
-		datasourceUrl: c.env?.DATABASE_URL	,
+		datasourceUrl: c.env?.DATABASE	,
 	}).$extends(withAccelerate());
 	 //@ts-ignore
 	 try {

@@ -26,8 +26,8 @@ blogRouter.post('/', async (c) => {
         // Optionally retrieve the userId from the request context (ensure an authentication middleware sets this)
         // Initialize Prisma with your database URL from environment variables
         const prisma = new PrismaClient({
-            datasourceUrl: c.env?.DATABASE_URL,
-        }).$extends(withAccelerate());
+            datasourceUrl: c.env?.DATABASE,
+        }).$extends(withAccelerate()); //@ts-ignore
         const userId = c.get('userId');
         // Parse and validate the request body
         const body = await c.req.json();
@@ -59,7 +59,7 @@ blogRouter.get('/bulk', async (c) => {
     const prisma = new PrismaClient({
         datasources: {
             db: {
-                url: c.env?.DATABASE_URL,
+                url: c.env?.DATABASE,
             },
         },
     }).$extends(withAccelerate());
@@ -85,7 +85,7 @@ blogRouter.get('/bulk', async (c) => {
 blogRouter.put('/', async (c) => {
     const userId = c.get('userId');
     const prisma = new PrismaClient({
-        datasourceUrl: c.env?.DATABASE_URL,
+        datasourceUrl: c.env?.DATABASE,
     }).$extends(withAccelerate());
     const body = await c.req.json();
     const { success } = updateblog.safeParse(body);
@@ -111,7 +111,7 @@ blogRouter.put('/', async (c) => {
 blogRouter.get('/:id', async (c) => {
     const id = c.req.param('id'); //@ts-ignore
     const prisma = new PrismaClient({
-        datasourceUrl: c.env?.DATABASE_URL,
+        datasourceUrl: c.env?.DATABASE,
     }).$extends(withAccelerate());
     //@ts-ignore
     try {
