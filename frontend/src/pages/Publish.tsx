@@ -5,10 +5,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-
-     
-
-
  // alternative : const Blogdata = {title, content}
   // write Blogdata, instead of {title,content}, 
                

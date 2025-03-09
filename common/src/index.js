@@ -1,19 +1,25 @@
-import z from 'zod';
-export const signupInput = z.object({
-    email: z.string().email(),
-    password: z.string().min(6),
-    name: z.string().optional()
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.createblogInput = exports.updateblog = exports.signinInput = exports.signupInput = void 0;
+const zod_1 = __importDefault(require("zod"));
+exports.signupInput = zod_1.default.object({
+    email: zod_1.default.string().email(),
+    password: zod_1.default.string().min(6),
+    name: zod_1.default.string().optional()
 });
-export const signinInput = z.object({
-    email: z.string().email(),
-    password: z.string().min(6)
+exports.signinInput = zod_1.default.object({
+    email: zod_1.default.string().email(),
+    password: zod_1.default.string().min(6)
 });
-export const updateblog = z.object({
-    title: z.string(),
-    content: z.string(),
-    id: z.number()
+exports.updateblog = zod_1.default.object({
+    title: zod_1.default.string(),
+    content: zod_1.default.string(),
+    id: zod_1.default.number()
 });
-export const createblogInput = z.object({
-    title: z.string(),
-    content: z.string(),
+exports.createblogInput = zod_1.default.object({
+    title: zod_1.default.string(),
+    content: zod_1.default.string(),
 });

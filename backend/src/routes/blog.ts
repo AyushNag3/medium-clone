@@ -4,7 +4,7 @@ import { decode, sign, verify } from 'hono/jwt'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { auth } from 'hono/utils/basic-auth'
-import { signupInput, signinInput, createblogInput, updateblog} from '../../../common/src/index'
+import { signupInput, signinInput, createblogInput, updateblog} from '../../../common/dist/index'
 
 export const blogRouter = new Hono<{
     Bindings : {

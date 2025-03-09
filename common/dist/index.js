@@ -22,5 +22,4 @@ exports.updateblog = zod_1.default.object({
 exports.createblogInput = zod_1.default.object({
     title: zod_1.default.string(),
     content: zod_1.default.string(),
-    id: zod_1.default.number()
 });
