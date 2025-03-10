@@ -13,7 +13,7 @@ export interface Blog{
 
 export const useBlog = ({id} : {id:string}) => {
     const [loading,setloading] = useState(true) ;
-    const [blog, setblog] = useState<Blog|undefined>(undefined) ;
+    const [blog, setblog] = useState<Blog|null>(null) ;
     useEffect( () => {
           axios.get(`${BACKEND_URL}/api/v2/blog/${id}`, {
              headers : {

@@ -17,7 +17,6 @@ export const updateblog = z.object({
 export const createblogInput = z.object({
     title : z.string(),
     content : z.string(),
-    
 })
 export type signupInput = z.infer<typeof signupInput>
 export type signinInput = z.infer<typeof signinInput>
