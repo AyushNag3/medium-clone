@@ -10,10 +10,21 @@ export interface Blog{
         "name" : string;
     }
 }
+const defaultBlog: Blog = {
+    content: "",
+    title: "",
+    id: 0,
+    author: {
+      name: ""
+    }
+  };
+  
+
+
 
 export const useBlog = ({id} : {id:string}) => {
     const [loading,setloading] = useState(true) ;
-    const [blog, setblog] = useState<Blog|null>(null) ;
+    const [blog, setblog] = useState<Blog>(defaultBlog);
     useEffect( () => {
           axios.get(`${BACKEND_URL}/api/v2/blog/${id}`, {
              headers : {
