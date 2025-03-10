@@ -44,20 +44,20 @@ export const Auth = ({type} : {type : "Signin" | "Signup"}) => {
                          </Link>}
                     </div>
                 </div>
-                    <div> { type === "Signup" ? <LabelInput label="Name" placeholder="" onChange={(e) => {
+                    <div> { type === "Signup" ? <LabelInput label="Name" placeholder="Enter your name" onChange={(e) => {
                         setpostInputs({
                             ...postInputs,
                         name : e.target.value
                         })
                         }} /> : null}
                         
-                        <LabelInput label="Username" placeholder="" onChange={(e) => {
+                        <LabelInput label="Username" placeholder="Enter your email" onChange={(e) => {
                             setpostInputs({
                                 ...postInputs,
                             email : e.target.value
                             })
                         }} />
-                        <LabelInput label="Password" type={"password"} placeholder="" onChange={(e) => {
+                        <LabelInput label="Password" type={"password"} placeholder="Minimum 8 characters" onChange={(e) => {
                             setpostInputs({
                                 ...postInputs,
                             password : e.target.value
