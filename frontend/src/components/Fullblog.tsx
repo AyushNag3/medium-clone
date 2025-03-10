@@ -1,11 +1,11 @@
 
-import { Blog, useBlog } from "../hooks"
-import { useParams } from "react-router-dom"
+import { Blog} from "../hooks"
+
 import { Appbar } from "./Appbar"
 import { Avatar } from "./BlogCard"
 
 export const FullBlog = ({blog} : {blog: Blog}) => {
-    const userName: any = localStorage.getItem("name") ;
+ 
     return <div>
         <Appbar name = {blog.author.name}/>
     <div className="flex justify-center">
