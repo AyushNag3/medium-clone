@@ -16,8 +16,7 @@ export const Publish = () => {
     const navigate = useNavigate();
   
     const handlePublish = async () => {
-      const publishedDate = new Date().toISOString();
-  
+    
       const blogData = {
         title,
         content,
